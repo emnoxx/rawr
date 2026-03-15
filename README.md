@@ -3,6 +3,7 @@ Simple package manager and network file server, made for local file sending and 
 
 # Note:
 This project isn't finished. I do not expect anyone to use this and I'm really just having fun :3 
+So again, this is JUST a hobby project.
 I'm also still working on some big update, adding the main function of actually installing packages (wow, i know)
 I will add a simple sort of scripting language that will be able to tell the rawr interpreter how to actually install the package.
 Also rawr is and will always be able to just function as a simple file sharing service so if you need a really simple solution, then this might be enough!
