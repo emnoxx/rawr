@@ -49,7 +49,7 @@ func main() {
 		if os.Args[1] == "get" {
 			if len(os.Args) > 3 { // abomination incoming
 				fmt.Println("Getting file...")
-				out, err := exec.Command("curl", "-O", "http://"+os.Args[3]+"/"+os.Args[2]).CombinedOutput()
+				out, err := exec.Command("curl", "-O", "http://"+os.Args[2]+"/"+os.Args[3]).CombinedOutput()
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -198,16 +198,16 @@ func help_message() {
 	fmt.Println("rawr - Simple package manager")
 	fmt.Println("Usage info:")
 	fmt.Println()
-	fmt.Println("rawr pack [folder]: create a rawr package")
+	fmt.Println("rawr pack [directory]: create a rawr package")
 	fmt.Println("rawr unpack [package]: unpackage a packaged rawr package")
 	fmt.Println()
 	fmt.Println("rawr receive [port]: host an upload server for receiving packages")
 	fmt.Println("rawr give [file] [ip:port]: give a package to an open receiver")
 	fmt.Println()
-	fmt.Println("rawr serve [port]: host a download server for serving packages")
-	fmt.Println("rawr get [ip:port/saved name] [package path]")
-	fmt.Println()
-	fmt.Println("rawr install [package]: install a package")
+	fmt.Println("rawr serve [port] [directory]: host a download server for serving packages")
+	fmt.Println("rawr get [package_path] [ip:port/saved name]")
+	// fmt.Println()
+	// fmt.Println("rawr install [package]: install a package")
 	fmt.Println()
 	fmt.Println("rawr help/--help/nothing: Display this message")
 	fmt.Println("")
