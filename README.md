@@ -24,7 +24,7 @@ and move it to a folder in your $PATH.
 `rawr serve [port] [directory]`: host a download server for downloading packages 
 
 
-`rawr give [file] [ip:port]`: give a package to an open upload server
+`rawr give [package_path] [ip:port]`: give a package to an open upload server
 
 `rawr get [package_path] [ip:port]`: get a package from an open download server
 
