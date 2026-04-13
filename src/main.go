@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	
+
 	if len(os.Args) > 1 {
 
 		if os.Args[1] == "receive" {
@@ -54,9 +54,9 @@ func main() {
 					log.Fatal(err)
 				}
 				fmt.Printf(string(out))
-				} else {
-					fmt.Println("Specify a file to get and the server's address")
-				}
+			} else {
+				fmt.Println("Specify a file to get and the server's address")
+			}
 		}
 
 		if os.Args[1] == "pack" {
@@ -142,7 +142,7 @@ func receiver_setup(server_port string) { // #isuckatcodingsoiuseinternetcodelik
 		}
 	}()
 
-	fmt.Println("Press Enter to stop the server...")
+	fmt.Println("Press " + "\033[35m" + "Enter " + "\033[0m" + "to stop the server...")
 	var input string
 	fmt.Scanln(&input) // wait until user presses thingie
 	fmt.Println("Stopping the server...")
@@ -163,7 +163,7 @@ func server_setup(server_port string, server_directory string) {
 		}
 	}()
 	fmt.Println("Server directory: " + server_directory)
-	fmt.Println("Press Ender to stop the server...")
+	fmt.Println("Press " + "\033[35m" + "Enter " + "\033[0m" + "to stop the server...")
 	var input string
 	fmt.Scanln(&input) // wait for user presses enter grrr muhaha
 	fmt.Println("Stopping the server")
@@ -185,7 +185,7 @@ func get_local_ip(server_port string) {
 			}
 			for _, addr := range addrs {
 				if ipNet, ok := addr.(*net.IPNet); ok && ipNet.IP.To4() != nil {
-					fmt.Println("Server Address:", ipNet.IP.String()+":"+server_port)
+					fmt.Println("Server Address:", "\033[35m"+ipNet.IP.String()+":"+server_port+"\033[0m")
 					return // Exit after finding the first local IP
 				}
 			}
@@ -197,7 +197,7 @@ func help_message() {
 	fmt.Println()
 	fmt.Println("\033[35m" + "\033[1m" + "rawr - Simple P2P Package manager") // "\033[35m" is Magenta, "\033[0m" is Reset
 	fmt.Println()
-	fmt.Println("\033[0m" + "\033[3m" + "\033[33m" +  "Usage info:")
+	fmt.Println("\033[0m" + "\033[3m" + "\033[33m" + "Usage info:")
 	fmt.Println()
 	fmt.Println("rawr pack [directory]: create a rawr package")
 	fmt.Println("rawr unpack [package]: unpackage a packaged rawr package")
