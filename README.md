@@ -19,10 +19,10 @@ now, clone the repo:
 then cd into the repo's scripts directory:
 `cd rawr/scripts`,
 
-and now execute the install.sh script
+and now execute the install.sh script:
 `./install.sh`
 
-now follow the instructions in the script and you're set!
+follow the instructions in the script and you're set!
 
 If you only want to run a binary, run the export.sh script (located in the scripts directory)
 and find the binary in the exports directory.
