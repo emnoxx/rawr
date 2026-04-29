@@ -1,4 +1,1 @@
-obexftp
-curl
-zip
-unzip
+obexftp curl zip unzip
