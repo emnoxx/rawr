@@ -211,5 +211,5 @@ func help_message() {
 	// fmt.Println("rawr install [package]: install a package")
 	fmt.Println()
 	fmt.Println("rawr help/--help/nothing: Display this message")
-	fmt.Println("")
+	fmt.Println("\033[0m")
 }
