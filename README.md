@@ -10,7 +10,9 @@ Right now rawr is and will always be able to just function as a simple local P2P
  this may be enough if you just need something to transfer files over LAN!
 
 # Installation
-To install, clone the repo:
+First you need to install the dependencies (listed in dependencies.txt)
+Debian: `cat dependencies.txt | sudo apt install `
+now, clone the repo:
 `git clone https://github.com/emnoxx/rawr.git`,
 then cd into the repo's scripts directory:
 `cd rawr/scripts`,
