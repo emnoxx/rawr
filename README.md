@@ -12,13 +12,17 @@ Right now rawr is and will always be able to just function as a simple local P2P
 # Installation
 First you need to install the dependencies (listed in dependencies.txt)
 Debian: `cat dependencies.txt | sudo apt install `
+
 now, clone the repo:
 `git clone https://github.com/emnoxx/rawr.git`,
+
 then cd into the repo's scripts directory:
 `cd rawr/scripts`,
+
 and now execute the install.sh script
 `./install.sh`
-now follow the instructions and you're set!
+
+now follow the instructions in the script and you're set!
 
 If you only want to run a binary, run the export.sh script (located in the scripts directory)
 and find the binary in the exports directory.
