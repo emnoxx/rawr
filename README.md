@@ -4,19 +4,24 @@ Simple package manager and local file sharing service
 # Note:
 This project isn't finished. I do not expect anyone to use this and I'm really just having fun :3 
 So again, this is JUST a hobby project.
-I'm also still working on some big update, adding the main function of actually installing packages (wow, i know)
-I will add a simple sort of scripting language that will be able to tell the rawr interpreter how to actually install the package.
-Also rawr is and will always be able to just function as a simple local P2P file sharing service so if you need a really simple solution, then this might be enough!
+
+Locally installing packages is still a wip, stay tuned please.
+Right now rawr is and will always be able to just function as a simple local P2P file sharing service,
+ this may be enough if you just need something to transfer files over LAN!
 
 # Installation
-To install this project you could either grab a binary from the release section or
-clone the repo ( `git clone https://github.com/emnoxx/rawr.git` ) then make sure you have the dependencies listed in the `dependencies.txt` file installed and run
-the export.sh script in the root of the project by simply running `sh export.sh` or `chmod +x export.sh` and then `./export.sh`
+To install, clone the repo:
+`git clone https://github.com/emnoxx/rawr.git`,
+then cd into the repo's scripts directory:
+`cd rawr/scripts`,
+and now execute the install.sh script
+`./install.sh`
+now follow the instructions and you're set!
 
-once you chose the right binary for your device's architecture from the `exports/` directory, just simply rename it to "`rawr`"
-and move it to a folder in your $PATH.
-
-(there will be an install script later on)
+If you only want to run a binary, run the export.sh script (located in the scripts directory)
+and find the binary in the exports directory.
+I usually include the export binary in my git commits, so there may be some, though those exports
+may be too old so I recommend exporting them yourself.
 
 # Usage
 `rawr receive [port]`: host an upload server for receiving packages
