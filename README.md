@@ -26,7 +26,7 @@ follow the instructions in the script and you're set!
 
 If you only want to run a binary, run the export.sh script (located in the scripts directory)
 and find the binary in the exports directory.
-I usually include the export binary in my git commits, so there may be some, though those exports
+I usually include the export binaries in my git commits, so there may be some, though those exports
 may be too old so I recommend exporting them yourself.
 
 # Usage
