@@ -1,5 +1,5 @@
 # rawr
-Simple package manager and local file sharing service
+Simple package manager and local P2P file sharing service
 
 # Note:
 This project isn't finished. I do not expect anyone to use this and I'm really just having fun :3 
