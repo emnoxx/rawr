@@ -14,7 +14,7 @@ First you need to install the dependencies (listed in dependencies.txt)
 Debian: `cat dependencies.txt | sudo apt install `
 
 now, clone the repo:
-`git clone https://github.com/emnoxx/rawr.git`,
+`git clone https://gitlab.com/emnoxx/rawr.git`,
 
 then cd into the repo's scripts directory:
 `cd rawr/scripts`,
