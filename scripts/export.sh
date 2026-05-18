@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir ../exports/
+mkdir -p ../exports/
 
 echo "Building rawr-amd64..."
 

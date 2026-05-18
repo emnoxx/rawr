@@ -4,16 +4,20 @@ import (
 	"fmt"
 	"io"
 	"log"
+
 	"net"
 	"net/http"
 	"os"
 	"os/exec"
 	"strings"
+	//"github.com/go-ini/ini"
 )
 
 func main() {
 
 	if len(os.Args) > 1 {
+
+		// Networking
 
 		if os.Args[1] == "receive" {
 			get_local_ip(os.Args[2])
@@ -34,74 +38,37 @@ func main() {
 		}
 
 		if os.Args[1] == "give" {
-			if len(os.Args) > 3 { // abomination incoming
-				fmt.Println("Giving file...")
-				out, err := exec.Command("curl", "-X", "POST", "-F", "file=@"+os.Args[2], "http://"+os.Args[3]+"/upload").CombinedOutput()
-				if err != nil {
-					log.Fatal(err)
-				}
-				fmt.Printf(string(out))
-			} else {
-				fmt.Println("Specify a file to send and the target device's address in the format: ip_address:port")
-			}
+			give()
 		}
 
 		if os.Args[1] == "get" {
-			if len(os.Args) > 3 { // abomination incoming
-				fmt.Println("Getting file...")
-				out, err := exec.Command("curl", "-O", "http://"+os.Args[2]+"/"+os.Args[3]).CombinedOutput()
-				if err != nil {
-					log.Fatal(err)
-				}
-				fmt.Printf(string(out))
-			} else {
-				fmt.Println("Specify a file to get and the server's address")
-			}
+			get()
 		}
 
+		// Packaging & Local tools
+
 		if os.Args[1] == "pack" {
-			if len(os.Args) > 2 {
-				var pack_name string = os.Args[2] + ".rawr"
-				if _, err := os.Stat(os.Args[2]); err == nil {
-					pack_result := strings.ReplaceAll(pack_name, "/", "")
-					fmt.Println("Packaging \"" + pack_result + "\"")
-					exec.Command("zip", "-r", pack_result, os.Args[2]).Run()
-					fmt.Println("Package created:", pack_result)
-				} else {
-					fmt.Println("File does not exist")
-				}
-			} else {
-				fmt.Println("Specify a folder to pack")
-			}
+			pack()
 		}
 
 		if os.Args[1] == "unpack" {
-			if len(os.Args) > 2 {
-				var unpack_name string = os.Args[2]
-				if _, err := os.Stat(unpack_name); err == nil {
-					fmt.Println("Unpacking \"" + os.Args[2] + "\"")
-					exec.Command("unzip", unpack_name).Run()
-					os.Remove(unpack_name)
-					fmt.Println("Unpacked file:", unpack_name)
-				} else {
-					fmt.Println("File does not exist")
-				}
-			} else {
-				fmt.Println("Specify a folder to unpack")
-			}
+			unpack()
 		}
 
+		if os.Args[1] == "install" {
+			rawr_install()
+		}
 		if os.Args[1] == "help" || os.Args[1] == "--help" {
 			help_message()
-		}
-		if os.Args[1] == "love" {
-			fmt.Print("\n Love you Mum Mimiko, Auntie Metal and Mum² Suletta <3 \n\n")
 		}
 	} else {
 		help_message()
 	}
 }
 
+// - - - Networking functions - - -
+
+// File Upload thing
 func uploadFileHandler(w http.ResponseWriter, r *http.Request) { // i just vibe coded thisss why am i stupid.. >m<
 	// Limit the size of the memory to 10MB
 	r.ParseMultipartForm(10 << 20) // 10 MB
@@ -131,6 +98,7 @@ func uploadFileHandler(w http.ResponseWriter, r *http.Request) { // i just vibe 
 	fmt.Fprintf(w, "Successfully uploaded file: %s", handler.Filename)
 }
 
+// for `rawr receive`
 func receiver_setup(server_port string) { // #isuckatcodingsoiuseinternetcodelikealoser
 	http.HandleFunc("/upload", uploadFileHandler)
 	fmt.Println("Server set up, ready to transmit!")
@@ -148,6 +116,7 @@ func receiver_setup(server_port string) { // #isuckatcodingsoiuseinternetcodelik
 	fmt.Println("Stopping the server...")
 }
 
+// for `rawr serve`
 func server_setup(server_port string, server_directory string) {
 	// do the file serving thing from the chosen directory
 	fileServer := http.FileServer(http.Dir("./" + server_directory))
@@ -169,6 +138,33 @@ func server_setup(server_port string, server_directory string) {
 	fmt.Println("Stopping the server")
 }
 
+func get() {
+	if len(os.Args) > 3 { // abomination incoming
+		fmt.Println("Getting file...")
+		out, err := exec.Command("curl", "-O", "http://"+os.Args[2]+"/"+os.Args[3]).CombinedOutput()
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf(string(out))
+	} else {
+		fmt.Println("Specify a file to get and the server's address")
+	}
+}
+
+func give() {
+	if len(os.Args) > 3 { // abomination incoming
+		fmt.Println("Giving file...")
+		out, err := exec.Command("curl", "-X", "POST", "-F", "file=@"+os.Args[2], "http://"+os.Args[3]+"/upload").CombinedOutput()
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf(string(out))
+	} else {
+		fmt.Println("Specify a file to send and the target device's address in the format: ip_address:port")
+	}
+}
+
+// used to display the ip and port
 func get_local_ip(server_port string) {
 	ifaces, err := net.Interfaces()
 	if err != nil {
@@ -193,6 +189,72 @@ func get_local_ip(server_port string) {
 	}
 }
 
+// - - - Packaging functions - - -
+
+func pack() {
+	if len(os.Args) > 2 {
+		var pack_name string = os.Args[2] + ".rawr"
+		if _, err := os.Stat(os.Args[2]); err == nil {
+			pack_result := strings.ReplaceAll(pack_name, "/", "")
+			fmt.Println("Packaging \"" + pack_result + "\"")
+			exec.Command("zip", "-r", pack_result, os.Args[2]).Run()
+			fmt.Println("Package created:", pack_result)
+		} else {
+			fmt.Println("File does not exist")
+		}
+	} else {
+		fmt.Println("Specify a folder to pack")
+	}
+}
+
+func unpack() {
+	if len(os.Args) > 2 {
+		var unpack_name string = os.Args[2]
+		if _, err := os.Stat(unpack_name); err == nil {
+			fmt.Println("Unpacking \"" + os.Args[2] + "\"")
+			exec.Command("unzip", unpack_name).Run()
+			os.Remove(unpack_name)
+			fmt.Println("Unpacked file:", unpack_name)
+		} else {
+			fmt.Println("File does not exist")
+		}
+	} else {
+		fmt.Println("Specify a folder to unpack")
+	}
+}
+
+func rawr_install() {
+	if len(os.Args) > 2 {
+		var rawr_package string = os.Args[2]
+
+		os.MkdirAll("/tmp/rawr/packages/", 0755)
+		temp_dir, _ := os.MkdirTemp("/tmp/rawr/packages/", "")
+		fmt.Println(temp_dir)
+
+		exec.Command("cp", rawr_package, temp_dir+"/"+rawr_package).Run()
+		fmt.Println(rawr_package)
+
+		os.Chdir(temp_dir)
+		exec.Command("unzip", temp_dir+"/"+rawr_package).Run()
+
+		var rawr_dir string = rawr_package
+
+		// Remove the suffix ".rawr" if present.
+		rawr_dir, _ = strings.CutSuffix(rawr_package, ".rawr")
+
+		os.Chdir(temp_dir + "/" + rawr_dir)
+
+		err := exec.Command("sudo", "sh", "-c", "cp -a * /").Run()
+
+		if err != nil {
+			fmt.Println(err)
+		}
+	} else {
+		fmt.Println("Please specify a .rawr package to install!")
+	}
+}
+
+// Help message
 func help_message() {
 	fmt.Println()
 	fmt.Println("\033[35m" + "\033[1m" + "rawr - Simple P2P Package manager") // "\033[35m" is Magenta, "\033[0m" is Reset
@@ -207,8 +269,8 @@ func help_message() {
 	fmt.Println()
 	fmt.Println("rawr serve [port] [directory]: host a download server for serving packages")
 	fmt.Println("rawr get [package_path] [ip:port/saved name]")
-	// fmt.Println()
-	// fmt.Println("rawr install [package]: install a package")
+	fmt.Println()
+	fmt.Println("rawr install [package]: install a package")
 	fmt.Println()
 	fmt.Println("rawr help/--help/nothing: Display this message")
 	fmt.Println("\033[0m")

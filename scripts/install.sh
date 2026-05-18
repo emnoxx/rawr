@@ -39,8 +39,8 @@ if [ "$choice" = "y" ]; then
 	echo
 	echo "Creating data directories..."
 	
-	sudo mkdir /var/lib/rawr
-	sudo mkdir /var/lib/rawr/packages/
+	sudo mkdir -p /var/lib/rawr
+	sudo mkdir -p /var/lib/rawr/packages/
 
 	echo
 	echo "Starting export script..."
