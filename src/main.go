@@ -5,12 +5,13 @@ import (
 	"io"
 	"log"
 
+	"gopkg.in/ini.v1"
+
 	"net"
 	"net/http"
 	"os"
 	"os/exec"
 	"strings"
-	//"github.com/go-ini/ini"
 )
 
 func main() {
@@ -244,13 +245,20 @@ func rawr_install() {
 
 		os.Chdir(temp_dir + "/" + rawr_dir)
 
-		err := exec.Command("sudo", "sh", "-c", "cp -a * /").Run()
+		rawr_ini_file, _ := ini.Load("RAWR.ini")
+		package_name := rawr_ini_file.Section("package").Key("name").String()
+
+		fmt.Println(package_name)
+		exec.Command("sudo", "cp", "-a", "RAWR.ini", "/var/lib/rawr/packages/"+package_name+".ini").Run()
+		exec.Command("rm", "RAWR.ini").Run()
+
+		err := exec.Command("sudo", "sh", "-c", "cp -va -- * / 2>&1 | sed -n 's/^.* -> //p' >> /var/lib/rawr/list/"+package_name+".txt").Run()
 
 		if err != nil {
 			fmt.Println(err)
 		}
 	} else {
-		fmt.Println("Please specify a .rawr package to install!")
+		fmt.Println("Specify a .rawr package to install")
 	}
 }
 

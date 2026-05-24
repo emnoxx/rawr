@@ -2,6 +2,12 @@
 
 echo
 
+if [ "$1" = "help" ]; then
+  echo "./install.sh -> install rawr using stored binaries"
+  echo "./install.sh build -> build new binaries and install rawr"
+  exit
+fi
+
 PS3='What is your system Architecture?: '
 options=("Amd64" "Aarch64")
 select opt in "${options[@]}"
@@ -41,10 +47,13 @@ if [ "$choice" = "y" ]; then
 	
 	sudo mkdir -p /var/lib/rawr
 	sudo mkdir -p /var/lib/rawr/packages/
+	sudo mkdir -p /var/lib/rawr/list/
 
-	echo
-	echo "Starting export script..."
-	./export.sh
+  if [ "$1" = "build" ]; then
+	  echo
+	  echo "Starting export script..."
+	  ./export.sh  
+  fi
 
 	echo
 	if [ "$opt" = "Amd64" ]; then
