@@ -68,11 +68,11 @@ script into that directory. (Don't forget to chmod it incase you actaully want t
 Now again at the root of your package directory, create a RAWR.ini file.
 Currently there are barely any settings you can actually change but in this case just do
 
-`
+```
 [Package]
 name = "test.sh"
 
-`
+```
 
 After this, go into the parent directory and run
 `rawr pack [directory_name]`
