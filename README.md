@@ -29,7 +29,7 @@ and find the binary in the exports directory.
 I usually include the export binaries in my git commits, so there may be some, though those exports
 may be too old so I recommend exporting them yourself.
 
-# Usage
+# Arguments
 `rawr receive [port]`: host an upload server for receiving packages
 
 `rawr serve [port] [directory]`: host a download server for downloading packages 
@@ -49,3 +49,34 @@ may be too old so I recommend exporting them yourself.
 `rawr list`: list installed packages
 
 `rawr help/--help/(nothing)`: Display this message
+
+# Creating rawr packages
+
+## Intro
+A rawr package is simple, the root of the package archive represents the root of your system.
+A RAWR.ini file specifies the metadata of your package. It is also placed at the root of your
+.rawr package.
+
+## Example
+
+You want a `test.sh` file in directory `/usr/bin/`.
+You start my creating a new directory, Ideally you'd name said directory after your package,
+although the name of the directory is irrelevant regarding the package name itself.
+In the root of the directory, you create a `usr/bin/` directory, and place your test.sh
+script into that directory. (Don't forget to chmod it incase you actaully want to execute it).
+
+Now again at the root of your package directory, create a RAWR.ini file.
+Currently there are barely any settings you can actually change but in this case just do
+
+`
+[Package]
+name = "test.sh"
+
+`
+
+After this, go into the parent directory and run
+`rawr pack [directory_name]`
+and finally to install,
+`rawr install [package_name]`
+
+And then you'd be done ^^
