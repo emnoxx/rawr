@@ -81,3 +81,5 @@ and finally to install,
 `rawr install [package_name]`
 
 And then you'd be done ^^
+
+NOTE: Rawr doesn't check if a package name is already being used, for now it is your responsibility to maintain your packages.
