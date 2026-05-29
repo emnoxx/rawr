@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"gopkg.in/ini.v1"
 	"io"
 	"log"
-
-	"gopkg.in/ini.v1"
+	"path/filepath"
 
 	"net"
 	"net/http"
@@ -58,6 +58,10 @@ func main() {
 
 		if os.Args[1] == "install" {
 			rawr_install()
+		}
+
+		if os.Args[1] == "list" {
+			list_packages()
 		}
 		if os.Args[1] == "help" || os.Args[1] == "--help" {
 			help_message()
@@ -262,6 +266,24 @@ func rawr_install() {
 	}
 }
 
+func list_packages() { // learning source: https://www.javaguides.net/2025/01/golang-filepath-walk-function.html
+	root := "/var/lib/rawr/packages"
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() && filepath.Ext(path) == ".ini" {
+			ini_files, _ := ini.Load(path)
+			package_name := ini_files.Section("package").Key("name").String()
+			fmt.Println(package_name + " - " + path)
+		}
+		return nil
+	})
+	if err != nil {
+		fmt.Printf("Error walking the path %q: %v\n", root, err)
+	}
+}
+
 // Help message
 func help_message() {
 	fmt.Println()
@@ -280,6 +302,9 @@ func help_message() {
 	fmt.Println()
 	fmt.Println("rawr install [package]: install a package")
 	fmt.Println()
+	fmt.Println("rawr list : list installed packages")
+	fmt.Println()
 	fmt.Println("rawr help/--help/nothing: Display this message")
+	fmt.Println()
 	fmt.Println("\033[0m")
 }
