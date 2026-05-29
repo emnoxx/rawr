@@ -46,4 +46,6 @@ may be too old so I recommend exporting them yourself.
 
 `rawr install [package]`: install a rawr package
 
+`rawr list`: list installed packages
+
 `rawr help/--help/(nothing)`: Display this message
