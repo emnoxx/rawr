@@ -66,11 +66,12 @@ In the root of the directory, you create a `usr/bin/` directory, and place your 
 script into that directory. (Don't forget to chmod it incase you actaully want to execute it).
 
 Now again at the root of your package directory, create a RAWR.ini file.
-Currently there are barely any settings you can actually change but in this case just do
+Currently the only keys to specify are `name` and `version`, all under the section `[package]`
 
 ```
 [Package]
 name = "test.sh"
+version = "6.7"
 
 ```
 
