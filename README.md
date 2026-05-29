@@ -69,7 +69,7 @@ Now again at the root of your package directory, create a RAWR.ini file.
 Currently the only keys to specify are `name` and `version`, all under the section `[package]`
 
 ```
-[Package]
+[package]
 name = "test.sh"
 version = "6.7"
 
